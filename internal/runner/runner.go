@@ -16,8 +16,9 @@ import (
 	"github.com/tetratelabs/wazero/experimental"
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 	"github.com/tetratelabs/wazero/sys"
-	"github.com/wasilibs/go-ryl/internal/wasm"
 	"github.com/wasilibs/wazero-helpers/allocator"
+
+	"github.com/wasilibs/go-ryl/internal/wasm"
 )
 
 func Run(name string, args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer, cwd string) int {
@@ -68,8 +69,8 @@ func Run(name string, args []string, stdin io.Reader, stdout io.Writer, stderr i
 		cfg = cfg.WithEnv(k, v)
 	}
 
-	rt.NewHostModuleBuilder("wasi").NewFunctionBuilder().
-		WithGoModuleFunction(api.GoModuleFunc(func(ctx context.Context, mod api.Module, stack []uint64) {
+	_, err = rt.NewHostModuleBuilder("wasi").NewFunctionBuilder().
+		WithGoModuleFunction(api.GoModuleFunc(func(ctx context.Context, _ api.Module, stack []uint64) {
 			tid := nextTID.Add(1)
 			startArg := stack[0]
 			child, err := rt.InstantiateModule(ctx, code, cfg.
@@ -80,7 +81,9 @@ func Run(name string, args []string, stdin io.Reader, stdout io.Writer, stderr i
 				panic(err)
 			}
 			go func() {
-				defer child.Close(ctx)
+				defer func() {
+					_ = child.Close(ctx)
+				}()
 				// wasi_thread_start(thread_id: i32, start_arg: i32)
 				if _, err := child.ExportedFunction("wasi_thread_start").Call(ctx, tid, startArg); err != nil {
 					log.Printf("wasi_thread_start (tid %d): %v", tid, err)
@@ -90,6 +93,9 @@ func Run(name string, args []string, stdin io.Reader, stdout io.Writer, stderr i
 		}), []api.ValueType{api.ValueTypeI32}, []api.ValueType{api.ValueTypeI32}).
 		Export("thread-spawn").
 		Instantiate(ctx)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	_, err = rt.InstantiateModule(ctx, code, cfg)
 	if err != nil {
