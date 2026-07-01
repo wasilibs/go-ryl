@@ -1,8 +1,6 @@
 version: "2"
 run:
-  # Lint with the codeanalysis tag so the large transpiled wasm module is
-  # excluded from the build (a tiny stub stands in), keeping analysis fast.
-  # Real builds and tests use the default tags and the real generated file.
+  # Code generated from WASM too huge to analyze so we use a build tag to skip it.
   build-tags:
     - codeanalysis
 linters:
