@@ -21,9 +21,5 @@ To avoid installation entirely, it can be convenient to use `go run`
 $ go run github.com/wasilibs/go-ryl/cmd/ryl@latest .
 ```
 
-Note that due to the sandboxing of the filesystem when using Wasm, currently only files that descend
-from the current directory when executing the tool are accessible to it, i.e., `../yaml/my.yaml` or
-`/separate/root/my.yaml` will not be found.
-
 [1]: https://github.com/owenlamont/ryl
 [2]: https://wazero.io/
