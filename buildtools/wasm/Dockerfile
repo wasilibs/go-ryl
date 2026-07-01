@@ -14,8 +14,6 @@ RUN cargo update && cargo build --release --target wasm32-wasip1-threads --no-de
 SHELL ["/bin/bash", "-c"]
 RUN for f in target/wasm32-wasip1-threads/release/*.wasm; do wasm-opt -o "target/$(basename $f)" --flatten --rereloop --converge -O3 "$f"; done
 
-# Emit <name>.memory.go holding initialPages, read from each module's declared
-# memory minimum; the host allocates that many pages up front (see host.go).
 RUN for f in target/*.wasm; do \
       pages=$(wasm-objdump -x "$f" | grep -oE 'initial=[0-9]+' | head -1 | grep -oE '[0-9]+'); \
       printf '// Code generated from %s. DO NOT EDIT.\n\npackage wasm2go\n\nconst initialPages = %s\n' "$(basename "$f")" "$pages" > "${f%.wasm}.memory.go"; \

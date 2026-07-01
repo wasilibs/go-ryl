@@ -18,11 +18,6 @@ import (
 	"github.com/wasilibs/go-ryl/internal/wasm/memory"
 )
 
-// initialPages is generated from the wasm module's declared memory minimum
-// (see the *.memory.go file next to the transpiled module); it covers the
-// module's static data and initial stack, and the guest grows its own heap
-// from there.
-
 const (
 	hostMemoryPages = 65536 // 4 GiB of 64 KiB pages; the mmap reservation cap.
 
