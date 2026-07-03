@@ -14,7 +14,6 @@ func main() {
 	tasks.Define(tasks.Params{
 		LibraryName: "ryl",
 		LibraryRepo: "owenlamont/ryl",
-		GoReleaser:  true,
 		BuildOpts:   []build.Option{build.DisableCoverage()},
 	})
 	boot.Main()
