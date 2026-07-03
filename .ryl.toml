@@ -1,8 +1,8 @@
 [files]
 yaml = [
-    "*.yaml",
-    "*.yml",
-    ".yamllint",
+  "*.yaml",
+  "*.yml",
+  ".yamllint",
 ]
 
 [rules]
@@ -26,7 +26,6 @@ new-lines = "enable"
 octal-values = "disable"
 quoted-strings = "disable"
 trailing-spaces = "enable"
-
 
 [per-file-ignores]
 "./testdata/*" = ["braces"]
