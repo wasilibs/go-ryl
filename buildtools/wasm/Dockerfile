@@ -8,11 +8,11 @@ WORKDIR /workspace
 
 RUN rustup target add wasm32-wasip1-threads
 
-ENV RUSTFLAGS="-C link-arg=--export=__wasilibc_cwd -C link-arg=--export=malloc"
+ENV RUSTFLAGS="-C link-arg=--export=__wasilibc_cwd -C link-arg=--export=malloc -C opt-level=s"
 RUN cargo update && cargo build --release --target wasm32-wasip1-threads --no-default-features
 
 SHELL ["/bin/bash", "-c"]
-RUN for f in target/wasm32-wasip1-threads/release/*.wasm; do wasm-opt -o "target/$(basename $f)" --flatten --rereloop --converge -O3 "$f"; done
+RUN for f in target/wasm32-wasip1-threads/release/*.wasm; do wasm-opt -o "target/$(basename $f)" --flatten --rereloop --converge -Os "$f"; done
 
 RUN for f in target/*.wasm; do \
       pages=$(wasm-objdump -x "$f" | grep -oE 'initial=[0-9]+' | head -1 | grep -oE '[0-9]+'); \
