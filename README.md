@@ -8,8 +8,7 @@ on any platform that Go supports.
 
 ## Installation
 
-Precompiled binaries are available in the [releases](https://github.com/wasilibs/go-ryl/releases).
-Alternatively, install the plugin you want using `go install`.
+Install the plugin you want using `go install`.
 
 ```bash
 go install github.com/wasilibs/go-ryl/cmd/ryl@latest
