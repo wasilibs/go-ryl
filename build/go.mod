@@ -5,12 +5,12 @@ go 1.26.0
 require (
 	github.com/curioswitch/go-build v0.9.0
 	github.com/goyek/x v0.4.0
-	github.com/wasilibs/tools v0.0.0-20260908021008-48bd9c5eb510
+	github.com/wasilibs/tools v0.0.0-20261013012445-9b22f23b9e57
 )
 
 require (
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/cli/go-gh/v2 v2.16.0 // indirect
+	github.com/cli/go-gh/v2 v2.16.2 // indirect
 	github.com/cli/safeexec v1.0.1 // indirect
 	github.com/cli/shurcooL-graphql v0.0.4 // indirect
 	github.com/fatih/color v1.18.0 // indirect
@@ -26,7 +26,7 @@ require (
 	github.com/muesli/termenv v0.16.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/thlib/go-timezone-local v0.0.8 // indirect
-	golang.org/x/sys v0.48.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/term v0.45.0 // indirect
 	golang.org/x/text v0.41.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
